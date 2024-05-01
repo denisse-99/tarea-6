@@ -1,36 +1,46 @@
 /*
-*[]Crear tarjeta
-*[]Crear secciones para tarjeta.
-*[]Imagen
-*[]Nombre, descripción, edad, lista.
-*[]Inyectar información en la tarjeta.
-*[]Mostrar dentro de div.container
-*Crear funciones reutilizables.
-*Funciones para crear items
-*Funciones para inyectar texto
-*Funciones para renderizar
-*Múltiplos de usuarios
+*[x]Crear tarjeta
+*[x]Crear secciones para tarjeta.
+*[x]Imagen
+*[x]Nombre, descripción, edad, lista.
+*[x]Inyectar información en la tarjeta.
+*[x]Mostrar dentro de div.container
+*[x]Crear funciones reutilizables.
+*[x]Funciones para crear items
+*[x]Funciones para inyectar texto
+*[x]Funciones para renderizar
+*[x]Múltiplos de usuarios
 */
 
 const CARDS_CONTAINER = document.querySelector("#card-container"); //Siempre debe estar.
-const USER = {
+const USERS = [
+    {
     id: 1,
-    username: "User Name",
-    desc: "Sobre mí",
-    age: 24,
+    username: "carolina17",
+    desc: "Amante de los libros de romance. ",
+    age: 15,
     fav_books: {
         books: [
         "3MSC",
-        "El Principito",
-        "Ángeles y Demonios",
-    ],
+        "Estrellas Fugaces",
+        "Bajo la misma estrella"
+        ],
     },
-}; 
-
-//Crea un array en js con dos users con los siguientes atributos: Id(num), username, --> Esto lo podemos poner en CHATGPT. 
-
-//Los objetos se declaran con llaves como si fuera un valor?
-
+},
+    {
+    id: 2,
+    username: "jonathan_123",
+    desc: "Fan de leer en las tardes lluviosas. ",
+    age: 20,
+    fav_books: {
+        books: [
+        "El Conde de Montecristo",
+        "El Señor de las Moscas",
+        "Crimen y castigo"
+        ],
+    },
+},
+];
 
 //Crear secciones
 function createElements() {
@@ -43,24 +53,18 @@ const cardObj = {
 return cardObj;
 }
 
-// Lista ----------------------------------------------
-const bookList = USER.fav_books.books.map((e) => { ///*map es iteracción por cada elemento del array y regresa el array de lo que le indiquemos.  A diferencia del for each que repite*/
-    const item = document.createElement("ul");
-    item.textContent = e;
-    return item;
-})
-console.log(bookList);
+//Crear tarjeta e inyectamos información.
+function injectData(obj, user) {
+    const bookList = user.fav_books.books.map ((e) =>
+{
+        const item = document.createElement("ul");
+        item.textContent = e;
+        return item;
+});
 
-
-
-//Crear tarjeta
-//Inyectamos información
-function injectData(obj) {
-
-    
-    obj.name_section.textContent = USER.username;
-    obj.desc_section.textContent = USER.desc;
-    obj.age_section.textContent = USER.age;
+    obj.name_section.textContent = user.username;
+    obj.desc_section.textContent = user.desc;
+    obj.age_section.textContent = user.age;
     obj.book_section.append(...bookList);
     renderCard(obj);
 }
@@ -73,9 +77,12 @@ function renderCard(cardObj) {
         cardObj.age_section,
         cardObj.book_section,
     );
-CARDS_CONTAINER.appendChild(card);
+    card.className = "div-creado";
+    CARDS_CONTAINER.appendChild(card);
 }
 
-const cardData = createElements();
-injectData(cardData);
+USERS.forEach((user) => {
+    const cardData = createElements();
+    injectData(cardData, user);
+    });
 
